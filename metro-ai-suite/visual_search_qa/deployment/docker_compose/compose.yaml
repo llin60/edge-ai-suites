@@ -149,6 +149,10 @@ services:
     volumes:
       - ${HOST_DATA_PATH}:/home/user/data:rw
 
+volumes:
+  ov-models:
+    external: true
+
 networks:
   default:
     driver: bridge

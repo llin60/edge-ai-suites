@@ -20,38 +20,29 @@ git clone https://github.com/open-edge-platform/edge-ai-suites.git
 Start from `metro-ai-suite/visual_search_qa`
 
 ```bash
-cd edge-ai-suites/metro-ai-suite/visual_search_qa
-```
-
-Directory tree
-```
-visual_search_qa/
-├── deployment
-├── docs
-├── README.md
-├── src
-└── tests
+cd edge-ai-suites/metro-ai-suite
 ```
 
 Run the commands to build images for the microservices:
 
 ```bash
 git clone https://github.com/open-edge-platform/edge-ai-libraries.git
-cd edge-ai-libraries
+cd edge-ai-libraries/microservices
 
-docker build -t intel-egai-vlm-inference-microservice-gpu:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f microservices/model-serving/vlm-inference-microservice/docker/Dockerfile.gpu .
+docker build -t dataprep-visualdata-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f dataprep/dataprep-visual-data/src/Dockerfile .
 
-docker build -t dataprep-visualdata-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f microservices/dataprep/dataprep-visual-data/src/Dockerfile .
+docker build -t retriever-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f retriever/src/Dockerfile .
 
-docker build -t retriever-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f microservices/retriever/src/Dockerfile .
+cd model-serving/vlm-inference-microservice
+docker build -t intel-egai-vlm-inference-microservice-gpu:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f docker/Dockerfile.gpu .
 
-cd ..
+cd ../../../..
 ```
 
 Run the command to build image for the application:
 
 ```bash
-docker build -t visual-search-qa-app:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f src/Dockerfile .
+docker build -t visual-search-qa-app:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f visual_search_qa/src/Dockerfile .
 ```
 
 ### Step 2: Prepare host directories for models and data
