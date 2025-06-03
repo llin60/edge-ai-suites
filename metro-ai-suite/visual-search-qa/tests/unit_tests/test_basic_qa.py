@@ -8,7 +8,7 @@ APP_TIMEOUT = 30
 
 VLM_MODEL_NAME=os.getenv("VLM_MODEL_NAME", "Qwen/Qwen2.5-VL-7B-Instruct")
 
-at = AppTest.from_file("/home/user/visual_search_qa/src/app.py", default_timeout=APP_TIMEOUT)
+at = AppTest.from_file("/home/user/visual-search-qa/src/app.py", default_timeout=APP_TIMEOUT)
 at.run()
 
 def test_basic_qa():

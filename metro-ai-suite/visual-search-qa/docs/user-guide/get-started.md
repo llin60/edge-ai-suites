@@ -17,7 +17,7 @@ Clone the source code repository if you don't have it
 git clone https://github.com/open-edge-platform/edge-ai-suites.git
 ```
 
-Start from `metro-ai-suite/visual_search_qa`
+Start from `metro-ai-suite`
 
 ```bash
 cd edge-ai-suites/metro-ai-suite
@@ -29,7 +29,7 @@ Run the commands to build images for the microservices:
 git clone https://github.com/open-edge-platform/edge-ai-libraries.git
 cd edge-ai-libraries/microservices
 
-docker build -t dataprep-visualdata-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f dataprep/dataprep-visual-data/src/Dockerfile .
+docker build -t dataprep-visualdata-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f data-preparation/visual-data/src/Dockerfile .
 
 docker build -t retriever-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f retriever/src/Dockerfile .
 
@@ -42,7 +42,7 @@ cd ../../../..
 Run the command to build image for the application:
 
 ```bash
-docker build -t visual-search-qa-app:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f visual_search_qa/src/Dockerfile .
+docker build -t visual-search-qa-app:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f visual-search-qa/src/Dockerfile .
 ```
 
 ### Step 2: Prepare host directories for models and data
@@ -62,7 +62,7 @@ Make sure to put all your data (images and video) in the created data directory 
 1. Go to the deployment files
 
     ``` bash
-    cd deployment/docker_compose/
+    cd deployment/docker-compose/
     ```
 
 2.  Set up environment variables
@@ -118,7 +118,7 @@ vlm-inference-microservice   "/bin/bash -c '/app/…"   intel-egai-vlm-inference
 If you have customized requirements for the Milvus Server, you may start the Milvus Server separately and run the commands for visual search and QA services only
 
 ``` bash
-cd deployment/docker_compose/
+cd deployment/docker-compose/
 
 source env.sh # refer to Option 1 for model selection
 

@@ -13,11 +13,11 @@ RUN useradd -m -s /bin/bash user && \
 mkdir -p /home/user && \
 chown -R user /home/user/
 
-COPY visual_search_qa /home/user/visual_search_qa
-RUN chown -R user /home/user/visual_search_qa
+COPY visual-search-qa /home/user/visual-search-qa
+RUN chown -R user /home/user/visual-search-qa
 
 RUN pip install --no-cache-dir --upgrade pip setuptools && \
-    pip install --no-cache-dir -r /home/user/visual_search_qa/src/requirements.txt
+    pip install --no-cache-dir -r /home/user/visual-search-qa/src/requirements.txt
 
 ENV PYTHONPATH=$PYTHONPATH:/home/user
 
@@ -27,6 +27,6 @@ USER user
 
 EXPOSE 17580
 
-WORKDIR /home/user/visual_search_qa/src
+WORKDIR /home/user/visual-search-qa/src
 
 CMD ["streamlit", "run", "app.py", "--server.port", "17580", "--server.headless", "true"]

@@ -26,7 +26,7 @@ Query_list = {"car": "car-race",
 HOST_DATA_PATH = "/home/user/data/DAVIS/subset"
 MOUNT_DATA_PATH = "/home/user/data/DAVIS/subset"
 
-at = AppTest.from_file("/home/user/visual_search_qa/src/app.py", default_timeout=APP_TIMEOUT)
+at = AppTest.from_file("/home/user/visual-search-qa/src/app.py", default_timeout=APP_TIMEOUT)
 at.run()
 
 def helper_map2container(file_path: str):

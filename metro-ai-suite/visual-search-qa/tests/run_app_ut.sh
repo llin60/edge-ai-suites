@@ -10,7 +10,7 @@ CONTAINER_IDS=($CONTAINER_IDS)
 NUM_CONTAINERS=${#CONTAINER_IDS[@]}
 
 for file in unit_tests/*.py; do
-  docker cp "$file" ${CONTAINER_IDS[0]}:/home/user/visual_search_qa/src/
+  docker cp "$file" ${CONTAINER_IDS[0]}:/home/user/visual-search-qa/src/
 done
 
 declare -a TEST_RESULTS
@@ -21,7 +21,7 @@ for test_file in unit_tests/test_*.py; do
   test_file_name=$(basename "$test_file")  # Remove the unit_tests/ prefix
   echo "Running tests in $test_file_name"
   # Capture the output of the pytest command
-  output=$(docker exec -it ${CONTAINER_IDS[0]} bash -c "cd /home/user/visual_search_qa/src && python -m pytest $test_file_name --tb=short")
+  output=$(docker exec -it ${CONTAINER_IDS[0]} bash -c "cd /home/user/visual-search-qa/src && python -m pytest $test_file_name --tb=short")
   echo "$output"
   exit_code=$?
 

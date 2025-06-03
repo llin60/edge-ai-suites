@@ -11,7 +11,7 @@ APP_TIMEOUT = 30
 HOST_DATA_PATH = "/home/user/data/DAVIS/subset"
 HOST_DATA_PATH_COPY = "/home/user/data/DAVIS/subset_copy"
 
-at = AppTest.from_file("/home/user/visual_search_qa/src/app.py", default_timeout=APP_TIMEOUT)
+at = AppTest.from_file("/home/user/visual-search-qa/src/app.py", default_timeout=APP_TIMEOUT)
 at.run()
 
 def test_data_ingestion():
