@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import re
+import os
 import time
+import datetime
 from streamlit.testing.v1 import AppTest
 
 from ut_utils import generate_fake_meta, remove_fake_meta_files
@@ -23,7 +25,8 @@ Query_list = {"car": "car-race",
 "tractor": "tractor"
 }
 
-HOST_DATA_PATH = "/home/user/data/DAVIS/subset"
+HOST_DATA_PATH = os.environ.get("HOST_DATA_PATH", "/home/user/data")
+HOST_DATA_PATH = os.path.join(HOST_DATA_PATH, "DAVIS", "subset")
 MOUNT_DATA_PATH = "/home/user/data/DAVIS/subset"
 
 at = AppTest.from_file("/home/user/visual-search-qa/src/app.py", default_timeout=APP_TIMEOUT)
@@ -63,8 +66,8 @@ def test_filter_search():
         assert len(at.session_state.latest_log) == 1, f"Filter search by camera '{camera}' did not return expected result."
 
         # filter search by timestamp, should return 1 result
-        at.text_input(key="kf_s_time").input(str(timestamp-100))
-        at.text_input(key="kf_e_time").input(str(timestamp+100))
+        at.date_input(key="kf_s_time").set_value(datetime.datetime.strptime(str(timestamp), "%Y%m%d").date())
+        at.date_input(key="kf_e_time").set_value(datetime.datetime.strptime(str(timestamp), "%Y%m%d").date())
         at.button(key="kSearch").click().run()
         assert len(at.session_state.latest_log) == 1, f"Filter search by timestamp '{timestamp}' did not return expected result."
 

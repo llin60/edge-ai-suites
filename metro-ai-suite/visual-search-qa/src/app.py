@@ -8,7 +8,7 @@ import sys
 import os
 import argparse
 import logging
-import yaml
+import datetime
 import re
 import string
 import unicodedata
@@ -416,9 +416,11 @@ def query_submit():
     if st.session_state["kCamera"]:
         filters["camera"] = st.session_state["kCamera"]
     if st.session_state["f_s_time"]:
-        filters["timestamp_start"] = int(st.session_state["f_s_time"])
+        s_time = st.session_state["f_s_time"]
+        filters["timestamp_start"] = int(s_time.strftime("%Y%m%d"))
     if st.session_state["f_e_time"]:
-        filters["timestamp_end"] = int(st.session_state["f_e_time"])
+        e_time = st.session_state["f_e_time"]
+        filters["timestamp_end"] = int(e_time.strftime("%Y%m%d"))
 
     data = send_query_request(st.session_state["ktext"], st.session_state["kk"], filters)
     data = filter_output(data, st.session_state.de_duplicate)
@@ -643,12 +645,12 @@ if __name__ == '__main__':
         with col8.container():
             col9_col1,col9_col2,col9_col3,col9_col4 = st.columns([1.3, 1.5, 0.4, 1.5])
             col9_col1.write("Timestamp:")
-            st.session_state.f_s_time = col9_col2.text_input("",label_visibility="visible",key = "kf_s_time")
+            st.session_state.f_s_time = col9_col2.date_input("", value=None, label_visibility="visible",key="kf_s_time")
             col9_col3.write("to")
-            st.session_state.f_e_time = col9_col4.text_input("",label_visibility="visible",key = "kf_e_time")
+            st.session_state.f_e_time = col9_col4.date_input("", value=None, label_visibility="visible", key="kf_e_time")
         with col9.container(key = "search"):
-            query = st.button("Search",use_container_width = True,on_click  = query_submit, key="kSearch")
-    query_display = st.container(height=520,key = "media_display")
+            query = st.button("Search", use_container_width=True, on_click=query_submit, key="kSearch")
+    query_display = st.container(height=520,key="media_display")
     show_media()
     st.info(f"You have selected {st.session_state.selected_images_len} image(s) and {st.session_state.selected_videos_len} video(s),which will be used as the input of VQA!")
 

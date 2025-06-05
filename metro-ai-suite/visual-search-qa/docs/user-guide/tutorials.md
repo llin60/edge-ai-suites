@@ -123,9 +123,11 @@ Figure 1: Search without filter
 
 Figure 2: Search with filter
 
-### Summary
+### Supported filters
+-    Any string key-value pair: for example, {"camera": "camera_1"}, {"city": "Shanghai"}, {"location": "front_door"} etc. The rule for such filters is that the values must match with the entities meta in DB
+-    `timestamp_start` and `timestamp_end`: a range of timestamp, should be integers, such as UNIX timestamp or date in YYYYMMDD format 
 
-{Use this section to summarize what the user learned in the tutorial.}
+### Summary
 
 In this tutorial, you learned how to: ingest data with metadata (both via providing a json file or via API), and search with filters enabled
 
