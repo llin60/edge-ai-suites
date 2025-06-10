@@ -250,7 +250,7 @@ def get_vqa_msg(prompt):
                 })
             else:
                 image = Image.open(file_path)
-                file_id, mimetype  = image_to_url(image, "auto")
+                file_id, mimetype  = image_to_url(image, "auto", width=480)
                 _, extension = os.path.splitext(file_path)
                 image_url = compose_media_url(file_id, extension)
                 user_msg["content"].append({
@@ -512,7 +512,7 @@ def show_media():
                             st.session_state.selectbox_keys[f"{index}i"] = False
                         st.session_state.selectbox_keys[f"{index}i"] = col2.checkbox("",key= f"{index}i",on_change=checkbox_change,label_visibility="visible")
                         image = Image.open(target_path)
-                        st.image(image)
+                        st.image(image, width=480)
                         
                     css = f"""<style>
                                 .st-key-media_display .e6rk8up0:nth-of-type({i+1}) .e6rk8up2:nth-of-type({j+1}){{
@@ -536,7 +536,7 @@ def call_vqa():
                 st.write(contents.get("text"))
             if st.session_state.uploaded_file:
                 if "image" in st.session_state.uploaded_file.type:
-                    st.image(st.session_state.uploaded_file)
+                    st.image(st.session_state.uploaded_file, width=480)
                 if "video" in st.session_state.uploaded_file.type:
                     st.video(st.session_state.uploaded_file)
                 break
@@ -544,7 +544,7 @@ def call_vqa():
                 if contents.get("type") == "image_url":
                     if contents.get("image_url").get("url"):
                         url = contents.get("image_url").get("url")
-                        st.image(url)
+                        st.image(url, width=480)
                 if contents.get("type") == "video_url":
                     if contents.get("video_url"):
                         video_url = contents.get("video_url").get("url")
@@ -677,9 +677,9 @@ if __name__ == '__main__':
 
         st.session_state.uploaded_url = st.text_input("Import from URL",on_change = uploader_url_change,key = st.session_state.uploader_url_key)
         if st.session_state.uploaded_url:
-            st.image(st.session_state.uploaded_url)
+            st.image(st.session_state.uploaded_url, width=480)
         elif st.session_state.uploaded_file and  "image" in st.session_state.uploaded_file.type:
-            st.image(st.session_state.uploaded_file)
+            st.image(st.session_state.uploaded_file, width=480)
 
 
         if clear:
@@ -699,7 +699,7 @@ if __name__ == '__main__':
                         if contents.get("type") == "image_url":
                             if contents.get("image_url").get("url"):
                                 url = contents.get("image_url").get("url")
-                                st.image(url)
+                                st.image(url, width=480)
                         if contents.get("type") == "video_url":
                             if contents.get("video_url"):
                                 video_url = contents.get("video_url").get("url")

@@ -34,7 +34,7 @@ docker build -t dataprep-visualdata-milvus:latest --build-arg https_proxy=$https
 docker build -t retriever-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f retriever/src/Dockerfile .
 
 cd model-serving/vlm-inference-microservice
-docker build -t intel-egai-vlm-inference-microservice-gpu:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f docker/Dockerfile.gpu .
+docker build -t vlm-ov-serving-gpu:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f docker/Dockerfile.gpu .
 
 cd ../../../..
 ```
@@ -161,7 +161,9 @@ Try searching with prompt `tractor`, see if the results are correct.
 
 Expected valid inputs are "car-race", "deer", "guitar-violin", "gym", "helicopter", "carousel", "monkeys-trees", "golf", "rollercoaster", "horsejump-stick", "planes-crossing", "tractor"
 
-Try ticking a few search results, and ask in the leftside chatbox a question about the selected medias.
+Try ticking a search results, and ask in the leftside chatbox a question about the selected media.
+
+Note: for each chat request, you may select either a single image, or multiple images, or a single video. Multiple videos or a collection of images+videos are not supported yet.
 
 ## Performance
 

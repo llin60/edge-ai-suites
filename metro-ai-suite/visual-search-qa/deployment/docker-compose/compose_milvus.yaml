@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 services:
-  intel-egai-vlm-inference-microservice:
-    image: ${REGISTRY:-}intel-egai-vlm-inference-microservice-gpu:${TAG:-latest}
-    container_name: vlm-inference-microservice
+  vlm-ov-serving:
+    image: ${REGISTRY:-}vlm-ov-serving-gpu:${TAG:-latest}
+    container_name: vlm-ov-serving
     build:
       context: .
       dockerfile: docker/Dockerfile.gpu

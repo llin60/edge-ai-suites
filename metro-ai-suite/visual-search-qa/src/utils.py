@@ -89,7 +89,7 @@ def _normalize_to_bytes(data, width, output_format):
 
     if width > 0 and actual_width > width:
         new_height = int(1.0 * actual_height * width / actual_width)
-        image = image.resize((width, new_height))
+        image = image.resize((width, new_height), resample=Image.BILINEAR)
         data = _PIL_to_bytes(image, format=format, quality=90)
         mimetype = "image/" + format.lower()
 
@@ -107,7 +107,7 @@ def generate_sha224(image, mimetype):
 
 
 def image_to_url(
-    image, output_format
+    image, output_format, width=MAXIMUM_CONTENT_WIDTH
 ):
     # PIL Images
     if isinstance(image, ImageFile.ImageFile) or isinstance(image, Image.Image):
@@ -134,7 +134,7 @@ def image_to_url(
     else:
         data = image
 
-    (data, mimetype) = _normalize_to_bytes(data, MAXIMUM_CONTENT_WIDTH, output_format)
+    (data, mimetype) = _normalize_to_bytes(data, width, output_format)
     file_id = generate_image_hash(data, mimetype)
     return file_id, mimetype
 
