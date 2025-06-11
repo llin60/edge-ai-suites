@@ -29,14 +29,14 @@ Run the commands to build images for the microservices:
 git clone https://github.com/open-edge-platform/edge-ai-libraries.git
 cd edge-ai-libraries/microservices
 
-docker build -t dataprep-visualdata-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f data-preparation/visual-data/src/Dockerfile .
+docker build -t dataprep-visualdata-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f visual-data-preparation-for-retrieval/src/Dockerfile .
 
 docker build -t retriever-milvus:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f retriever/src/Dockerfile .
 
-cd model-serving/vlm-inference-microservice
-docker build -t vlm-ov-serving-gpu:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f docker/Dockerfile.gpu .
+cd vlm-openvino-serving
+docker build -t vlm-openvino-serving:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f docker/Dockerfile .
 
-cd ../../../..
+cd ../../..
 ```
 
 Run the command to build image for the application:

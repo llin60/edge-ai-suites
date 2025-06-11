@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 services:
-  vlm-ov-serving:
-    image: ${REGISTRY:-}vlm-ov-serving-gpu:${TAG:-latest}
-    container_name: vlm-ov-serving
+  vlm-openvino-serving:
+    image: ${REGISTRY:-}vlm-openvino-serving:${TAG:-latest}
+    container_name: vlm-openvino-serving
     build:
       context: .
-      dockerfile: docker/Dockerfile.gpu
+      dockerfile: docker/Dockerfile
       args:
         no_proxy: ${no_proxy_env},${HOST_IP}
         http_proxy: ${http_proxy}
