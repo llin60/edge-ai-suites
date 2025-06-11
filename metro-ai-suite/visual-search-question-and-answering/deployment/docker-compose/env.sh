@@ -18,7 +18,7 @@ export no_proxy_env=${no_proxy}
 export MILVUS_HOST=${host_ip}
 export MILVUS_PORT=19530
 
-export DATA_INGEST_WITH_DETECT=false
+export DATA_INGEST_WITH_DETECT=true
 
 # huggingface mirror 
 export HF_ENDPOINT=https://hf-mirror.com
