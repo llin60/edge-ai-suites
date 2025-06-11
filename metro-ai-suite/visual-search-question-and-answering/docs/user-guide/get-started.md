@@ -42,7 +42,7 @@ cd ../../../..
 Run the command to build image for the application:
 
 ```bash
-docker build -t visual-search-qa-app:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f visual-search-qa/src/Dockerfile .
+docker build -t visual-search-qa-app:latest --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy --build-arg no_proxy=$no_proxy -f visual-search-question-and-answering/src/Dockerfile .
 ```
 
 ### Step 2: Prepare host directories for models and data
@@ -54,6 +54,8 @@ mkdir -p $HOME/data
 ```
 
 Make sure to put all your data (images and video) in the created data directory (`$HOME/data` in the example commands) BEFORE deploying the services.
+
+Note: supported media types: jpg, png, mp4
 
 ### Step 3: Deploy
 

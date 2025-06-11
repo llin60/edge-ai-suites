@@ -13,7 +13,7 @@ RUN useradd -m -s /bin/bash user && \
 mkdir -p /home/user && \
 chown -R user /home/user/
 
-COPY visual-search-qa /home/user/visual-search-qa
+COPY visual-search-question-and-answering /home/user/visual-search-qa
 RUN chown -R user /home/user/visual-search-qa
 
 RUN pip install --no-cache-dir --upgrade pip setuptools && \
