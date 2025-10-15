@@ -1,13 +1,13 @@
 {
     "header": {
-      "title": "Smart Classroom Sample App",
+      "title": "Intel® AI Generative EMR",
       "startRecording": "Start Recording",
       "stopRecording": "Stop Recording",
       "uploadFile": "Upload File",
       "timer": "Timer"
     },
     "footer": {
-      "copyright": "© 2025 Smart Classroom Sample App"
+      "copyright": "© 2025 Intel® AI Generative EMR"
     },
     "notifications": {
       "start": "Upload an audio file to begin a new session",
@@ -18,9 +18,7 @@
       "streamingSummary": "Streaming summary…",
       "loadingTranscript": "Loading transcript…",
       "analyzingAudio": "Analyzing audio…",
-      "summaryReady": "Summary ready",
-      "uploadSuccess": "File uploaded successfully!",
-      "uploadFailed": "Failed to upload file."
+      "summaryReady": "Summary ready"
     },
     "settings": {
       "title": "Settings",
@@ -51,7 +49,7 @@
       "resource": "Resource Utilization",
       "models": "Pre-validated Models",
       "subtitle_configuration": "Platform and software configuration details",
-      "subtitle_resource": "CPU, GPU, NPU, Memory, and Power usage over time",
+      "subtitle_resource": "CPU, GPU, Memory, and Power usage over time",
       "subtitle_models": "Select models for transcripts and summary",
       "platformConfiguration": "Platform Configuration",
       "processor": "Processor",
@@ -72,7 +70,6 @@
       "loadingConfiguration": "Loading configuration data...",
       "cpuUtilization": "CPU Utilization",
       "gpuUtilization": "GPU Utilization",
-      "npuUtilization": "NPU Utilization",
       "memoryUtilization": "Memory Utilization",
       "powerUtilization": "Power Utilization",
       "loadingResource": "Loading resource data...",

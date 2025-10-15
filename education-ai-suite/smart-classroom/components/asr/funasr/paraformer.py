@@ -21,7 +21,7 @@ class Paraformer(BaseASR):
         self.model = AutoModel(model=model_name, model_revision=revision,
                         vad_model="fsmn-vad", vad_model_revision="v2.0.4",
                         punc_model="iic/punc_ct-transformer_zh-cn-common-vocab272727-pytorch", punc_model_revision="v2.0.4",
-                        #   spk_model="cam++", spk_model_revision="v2.0.2",
+                        # spk_model="cam++", spk_model_revision="v2.0.2",
                         device=device, disable_update=True
                         )
 
@@ -29,8 +29,10 @@ class Paraformer(BaseASR):
         try:
             res = self.model.generate(input=audio_path)
             # res [{'key': <input>, 'text': '...', , 'timestamp': [[], [], ...]}]
+            # res [{'key': <input>, 'text': '...', , 'timestamp': [[], [], ...], 'sentence_info': [{'text':,start':, 'end':,timestamp':,'spk':}, {'text':...}]}]
             if len(res) > 0:
                 return res[0]["text"]
+                # return res[0]["sentence_info"]
             else:
                 logger.error("ASR transcription generated empty result.")
                 return None

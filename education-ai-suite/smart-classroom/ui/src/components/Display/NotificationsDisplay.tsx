@@ -1,24 +1,14 @@
 import React from 'react';
-import notificationIcon from '../../assets/images/notification.svg';
-import attentionTriangleIcon from '../../assets/images/attention-triangle.svg'; // Import the error icon
-
+import notificationicon from '../../assets/images/notification.svg';
 interface NotificationsDisplayProps {
   notification: string;
-  error?: string | null; 
 }
 
-const NotificationsDisplay: React.FC<NotificationsDisplayProps> = ({ notification, error }) => {
-  // Dynamically choose the icon based on whether it's an error
-  const icon = error ? attentionTriangleIcon : notificationIcon;
-
+const NotificationsDisplay: React.FC<NotificationsDisplayProps> = ({ notification }) => {
   return (
-    <div className={`notifications-display ${error ? 'has-error' : ''}`}>
-      <img
-        src={icon}
-        alt={error ? 'Error Icon' : 'Notification Icon'}
-        className="notification-icon"
-      />
-      <span>{error || notification}</span>
+    <div className="notifications-display">
+      <img src={notificationicon} alt="Notification Icon" className="notification-icon" />
+      <span>{notification}</span>
     </div>
   );
 };

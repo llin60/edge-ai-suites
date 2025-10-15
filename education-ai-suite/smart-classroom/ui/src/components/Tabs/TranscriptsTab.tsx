@@ -37,14 +37,10 @@ const TranscriptsTab: React.FC = () => {
           if (ev.type === "transcript") {
             if (!sentFirst) { dispatch(startTranscript()); sentFirst = true; }
             dispatch(appendTranscript(ev.token));
-          } else if (ev.type === 'error') {
-            window.dispatchEvent(new CustomEvent('global-error', { detail: ev.message || 'Transcription error' }));
+          } else if (ev.type === "done") {
             dispatch(finishTranscript());
-            break;
-          } else if (ev.type === 'done') {
-            dispatch(finishTranscript());
+            console.log('Transcription finished, dispatching transcriptionComplete');
             dispatch(transcriptionComplete());
-            break;
           }
         }
       } catch { /* ignore aborts */ }

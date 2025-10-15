@@ -12,8 +12,7 @@ export interface UIState {
   autoSwitched: boolean;
   sessionId: string | null;
   uploadedAudioPath: string | null;
-  shouldStartSummary: boolean;
-  projectLocation: string;
+  shouldStartSummary: boolean; // trigger to start summary once
 }
 
 const initialState: UIState = {
@@ -25,7 +24,6 @@ const initialState: UIState = {
   sessionId: null,
   uploadedAudioPath: null,
   shouldStartSummary: false,
-  projectLocation: 'storage/',
 };
 
 const uiSlice = createSlice({
@@ -41,10 +39,6 @@ const uiSlice = createSlice({
       state.sessionId = null;
       state.uploadedAudioPath = null;
       state.shouldStartSummary = false;
-    },
-    processingFailed(state) {
-      state.aiProcessing = false;
-      state.summaryLoading = false;
     },
     transcriptionComplete(state) {
       console.log('transcriptionComplete reducer called');
@@ -78,8 +72,6 @@ const uiSlice = createSlice({
     setActiveTab(state, action: PayloadAction<Tab>) {
       state.activeTab = action.payload;
     },
-    setProjectLocation(state, action: PayloadAction<string>) { // Add reducer to update projectLocation
-      state.projectLocation = action.payload;},
     resetFlow() {
       return initialState;
     },
@@ -88,7 +80,6 @@ const uiSlice = createSlice({
 
 export const {
   startProcessing,
-  processingFailed,
   transcriptionComplete,
   clearSummaryStartRequest,
   setUploadedAudioPath,
@@ -96,7 +87,6 @@ export const {
   firstSummaryToken,
   summaryDone,
   setActiveTab,
-  setProjectLocation,
   resetFlow,
 } = uiSlice.actions;
 

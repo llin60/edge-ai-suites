@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import ReactMarkdown from "react-markdown";
 import "../../assets/css/AISummaryTab.css";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { firstSummaryToken, summaryDone, clearSummaryStartRequest } from "../../redux/slices/uiSlice";
@@ -28,6 +27,7 @@ const AISummaryTab: React.FC = () => {
   }, [sessionId]);
 
   useEffect(() => {
+    console.log('[AISummaryTab] check start', { summaryEnabled, shouldStartSummary, sessionId, started: startedRef.current });
     if (!summaryEnabled || !sessionId || !shouldStartSummary) return;
     if (activeSummarySessions.has(sessionId) || startedRef.current) return;
 
@@ -40,21 +40,15 @@ const AISummaryTab: React.FC = () => {
       try {
         let sentFirst = false;
         for await (const ev of streamSummary(sessionId)) {
-          if (ev.type === "summary_token") {
+          if (ev.type === 'summary_token') {
             if (!sentFirst) { dispatch(firstSummaryToken()); sentFirst = true; }
             dispatch(appendSummary(ev.token));
-          } else if (ev.type === "error") {
-            window.dispatchEvent(new CustomEvent('global-error', { detail: ev.message || 'Summary error' }));
+          } else if (ev.type === 'done') {
             dispatch(finishSummary());
             dispatch(summaryDone());
-            break;
-          } else if (ev.type === "done") {
-            dispatch(finishSummary());
-            dispatch(summaryDone());
-            break;
           }
         }
-      } catch (e: any) {
+      } catch (e:any) {
         if (e?.name !== 'AbortError') console.error('[AISummaryTab] stream error', e);
         dispatch(finishSummary());
         dispatch(summaryDone());
@@ -75,10 +69,11 @@ const AISummaryTab: React.FC = () => {
         </div>
       )}
       <div className="summary-content">
-        <ReactMarkdown>{typed}</ReactMarkdown>
+        <p>{typed}</p>
       </div>
     </div>
   );
 };
 
 export default AISummaryTab;
+// ...existing code...

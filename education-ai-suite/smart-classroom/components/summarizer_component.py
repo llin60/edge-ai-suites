@@ -4,6 +4,7 @@ from components.llm.ipex.summarizer import Summarizer as IpexSummarizer
 from utils.runtime_config_loader import RuntimeConfig
 from utils.config_loader import config
 from utils.storage_manager import StorageManager
+from utils.render_helper import render_markdown_with_template
 import logging, os
 import time
 
@@ -57,6 +58,7 @@ class SummarizerComponent(PipelineComponent):
         project_path = os.path.join(project_config.get("location"), project_config.get("name"), self.session_id)
         StorageManager.save(os.path.join(project_path, "summary.md"), "", append=False)
         prompt = self.summarizer.tokenizer.apply_chat_template(self._get_message(input), tokenize=False, add_generation_prompt=True)
+        # prompt = self.summarizer.tokenizer.apply_chat_template(self._get_message(input), tokenize=False, add_generation_prompt=True, enable_thinking=False)
         start = time.perf_counter()
         first_token_time = None
         total_tokens = 0
@@ -100,6 +102,8 @@ class SummarizerComponent(PipelineComponent):
                     "performance.end_to_end_time": f"{round(end_to_end_time, 4)}s",
                 }
             )
+
+            render_markdown_with_template(os.path.join(project_path, "summary.md"), template_path="template.html",out_path=os.path.join(project_path, "emr.html"))
         
 
 

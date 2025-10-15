@@ -1,26 +1,18 @@
 .project-location-input {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.project-location-field {
-  width: 100%;
-  padding: 8px 8px;
-  border: 1px solid #bcb6b6;
-  border-radius: 4px;
-  font-size: 14px;
-  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .storage-prefix {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
+  color: #888;       
   font-size: 14px;
-  pointer-events: none; 
-  user-select: none;   
-  white-space: nowrap;
+}
+
+.project-location-field {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f8f8f8;
 }

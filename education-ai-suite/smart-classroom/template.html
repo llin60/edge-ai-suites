@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>患者病历</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            height: 100vh;
+        }
+        .left {
+            width: 30%;
+            padding: 10px;
+            background-color: #f4f4f4;
+            box-sizing: border-box;
+        }
+        .right {
+            width: 70%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="left">
+        <div class="section">
+            <h2>患者信息</h2>
+            <p>姓名： 张三</p>
+            <p>性别： 女</p>
+            <p>年龄： 55</p>
+            <p>ID号码： 123456789</p>
+        </div>
+        <div class="section">
+            <h2>检验报告</h2>
+            <table>
+                <tr>
+                    <td>项目</td>
+                    <td>结果</td>
+                </tr>
+                <tr>
+                    <td>血红蛋白</td>
+                    <td>112</td>
+                </tr>
+                <tr>
+                    <td>红细胞比容</td>
+                    <td>33</td>
+                </tr>
+                <tr>
+                    <td>淋巴细胞%</td>
+                    <td>39.9</td>
+                </tr>
+                <tr>
+                    <td>淋巴细胞绝对数</td>
+                    <td>2.91</td>
+                </tr>
+                <tr>
+                    <td>。。。</td>
+                    <td>。。。</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="right">
+        <h1>病历</h1>
+        <div class="markdown-body">
+        {{MARKDOWN_CONTENT}}
+        </div>
+    </div>
+</body>
+</html>
