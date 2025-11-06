@@ -6,11 +6,12 @@ metadata:
   namespace: {{ .Values.namespace }}
   name: {{ $.Values.config.model_registry.name }}
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: mraas-port
       port: {{ $.Values.config.model_registry.int.port }}
       targetPort: {{ $.Values.config.model_registry.int.port }}
+      nodePort: {{ $.Values.config.model_registry.ext.port }}
   selector:
     app: ModelRegistry
 ---

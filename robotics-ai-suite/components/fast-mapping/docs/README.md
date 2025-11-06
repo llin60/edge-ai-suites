@@ -1,8 +1,3 @@
-<!--
-Copyright (C) 2025 Intel Corporation
-
-SPDX-License-Identifier: Apache-2.0
--->
 
 # FastMapping Algorithm
 
@@ -29,7 +24,7 @@ The source code of this component can be found here:
     application run the command below:
 
     ``` bash
-    sudo apt-get install ros-humble-fast-mapping
+    sudo apt-get install ros-humble-fast-mapping    
     ```
 
     > [!NOTE]
@@ -40,7 +35,7 @@ The source code of this component can be found here:
 2. Set up your ROS 2 environment
 
     ``` bash
-    source /opt/ros/humble/setup.bash
+    source /opt/ros/humble/setup.bash 
     ```
 
 3. Run the FastMapping sample application using a ROS 2 bag of a robot

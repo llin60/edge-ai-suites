@@ -7,11 +7,9 @@ function run_sample() {
   device=$2
   interval=10
   if [ $device == "GPU" ]; then
-    pipeline_name="yolov11s_1_gpu"
-  elif [ $device == "NPU" ]; then
-    pipeline_name="yolov11s_1_npu"
+    pipeline_name="yolov10_1_gpu"
   else
-    pipeline_name="yolov11s_1_cpu"
+    pipeline_name="yolov10_1_cpu"
   fi
   pipeline_list=()
   echo
@@ -33,6 +31,10 @@ function run_sample() {
             "type": "webrtc",
             "peer-id": "object_detection_$x"
         }
+    },
+    "parameters": {
+        "detection-device": "$device",
+        "classification-device": "$device"
     }
   }
 EOF
@@ -94,15 +96,12 @@ function stop_all_pipelines() {
 
 forcedCPU=true
 forcedGPU=false
-forcedNPU=false
 
 for arg in "$@"; do
   if [ "$arg" == "cpu" ]; then
       forcedCPU=true
   elif [ "$arg" == "gpu" ]; then
       forcedGPU=true
-  elif [ "$arg" == "npu" ]; then
-      forcedNPU=true
   fi
 done
 
@@ -124,17 +123,6 @@ if $forcedGPU; then
     fi
   else
     echo -e "\n>>>>>No GPU device found. Please check your GPU driver installation or use CPU."
-    exit 0
-  fi
-elif $forcedNPU; then
-  if ls /dev/accel/accel* 1> /dev/null 2>&1; then
-    echo -e "\n>>>>>NPU device selected."
-    run_sample 4 NPU
-    if [ $? -ne 0 ]; then
-      exit 1
-    fi
-  else
-    echo -e "\n>>>>>No NPU device found. Please check your NPU driver installation or use CPU."
     exit 0
   fi
 elif $forcedCPU; then

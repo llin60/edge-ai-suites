@@ -36,25 +36,6 @@ cd edge-ai-suites/metro-ai-suite/metro-vision-ai-app-recipe/
 
 ```
 
-Optional: Pull the helm chart and replace the existing helm-chart folder with it
-    - Note: The helm chart should be downloaded when you are not using the helm chart provided in `edge-ai-suites/metro-ai-suite/metro-vision-ai-app-recipe/loitering-detection/helm-chart`
-
-```bash
-#Navigate to Loitering Detection directory
-cd loitering-detection
-
-#Download helm chart with the following command
-helm pull oci://registry-1.docker.io/intel/loitering-detection --version 1.2.0
-
-#unzip the package using the following command
-tar -xvf loitering-detection-1.2.0.tgz
-
-#Replace the helm directory
-rm -rf helm-chart && mv loitering-detection helm-chart
-
-cd ..
-```
-
 ## Step 2: Configure and update the environment variables
 
 1. Update the following fields in `values.yaml` file in the Helm chart:
@@ -93,7 +74,7 @@ Follow this procedure to run the sample application. In a typical deployment, mu
 3. Start the application with the Client URL (cURL) command by replacing the <HOST_IP> with the Node IP. (Total 8 places)
 
 ``` sh
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_tracking_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30385/pipelines/user_defined_pipelines/object_tracking_1 -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/VIRAT_S_000101.mp4",
@@ -115,7 +96,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_trac
     }
 }'
 
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_tracking_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30385/pipelines/user_defined_pipelines/object_tracking_2 -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/VIRAT_S_000102.mp4",
@@ -137,7 +118,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_trac
     }
 }'
 
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_tracking_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30385/pipelines/user_defined_pipelines/object_tracking_3 -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/VIRAT_S_000103.mp4",
@@ -159,7 +140,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_trac
     }
 }'
 
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_tracking_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30385/pipelines/user_defined_pipelines/object_tracking_4 -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/VIRAT_S_000104.mp4",
@@ -182,7 +163,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/object_trac
 }'
 ```
 
-4. View the Grafana and WebRTC streaming on `https://<HOST_IP>:30443/grafana/`.
+4. View the Grafana and WebRTC streaming on `http://<HOST_IP>:30380`.
     - Log in with the following credentials:
         - **Username:** `admin`
         - **Password:** `admin`

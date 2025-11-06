@@ -120,10 +120,10 @@ class AnomalyDetectorHandler(Handler):
         server = None
         x = None
         y = None
-
-        if "source" in point.tags:
-            server = point.tags["source"]
-
+        for point_tag in point.tags:
+            if point_tag.key == "source":
+                server = point_tag.value
+                break
         global enable_benchmarking
         if enable_benchmarking:
             if server not in self.points_received:
@@ -145,18 +145,20 @@ class AnomalyDetectorHandler(Handler):
                 return 0
 
             return 1
-
-        if self.x_name in point.fieldsDouble:
-            x = point.fieldsDouble[self.x_name]
-
-        if self.y_name in point.fieldsDouble:
-            y = point.fieldsDouble[self.y_name]
+        # extract the wind speed and power from the point
+        for point_data in point.fieldsDouble:
+            if point_data.key == self.x_name:
+                x = point_data.value
+            elif point_data.key == self.y_name:
+                y = point_data.value
+            else:
+                continue
+        # logger.info(f"Asset: {point.name}, x: {x}, y:{y}, cc:{self.enable_gcp_client}")
 
         if x is not None and y is not None:
             # check if the current point is an anomalous point
             check_for_anomalies = process_the_point(x,y)
-            point.fieldsDouble["analytic"] = True
-
+            point.fieldsDouble.add(key = "analytic", value = True)
             if check_for_anomalies:
                 y_pred = self.rf.predict(np.reshape(x,(-1,1)))
                 error = (y_pred[0]-y)/(y)
@@ -180,32 +182,29 @@ class AnomalyDetectorHandler(Handler):
                     if abs(lm.coef_)<200:
                         self.anomalies.append((x,y))
                         if error<0.3:
-                            point.fieldsDouble["anomaly_status"] = 0.3
+                            point.fieldsDouble.add(key = "anomaly_status", value = 0.3)
                             # anomaly_type="LOW"
                         elif error<0.6:
                             # anomaly_type = "MEDIUM"
-                            point.fieldsDouble["anomaly_status"] = 0.6
+                            point.fieldsDouble.add(key = "anomaly_status", value = 0.6)
                         else:
                             # anomaly_type = "HIGH"
-                            point.fieldsDouble["anomaly_status"] = 1.0
+                            point.fieldsDouble.add(key = "anomaly_status", value = 1)
                     else:
                         self.last_states.append(0)
         else:
             logger.error("No input received for %s %s, %s %s. Skipping anomaly detection."
                          , self.x_name, x, self.y_name, y)
-            point.fieldsDouble["analytic"] = False
+            point.fieldsDouble.add(key = "analytic", value = False)
 
         # write data back to db if it is an anomaly point or there is an alarm for the point
         response = udf_pb2.Response()
-        # Check if anomaly_status field exists, if not add it with default value
-        if "anomaly_status" not in point.fieldsDouble:
-            point.fieldsDouble["anomaly_status"] = 0.0
-
+        if not any(kv.key == "anomaly_status" for kv in point.fieldsDouble):
+            point.fieldsDouble.add(key = "anomaly_status", value = 0.0)
         time_now = time.time_ns()
-        processing_time = time_now - start_time
-        end_end_time = time_now - point.time
-        point.fieldsDouble["processing_time"] = processing_time
-        point.fieldsDouble["end_end_time"] = end_end_time
+        point.fieldsDouble.add(key = 'processing_time', value = time_now-start_time)
+
+        point.fieldsDouble.add(key = 'end_end_time', value = time_now-point.time)
         response.point.CopyFrom(point)
 
         self._agent.write_response(response, True)

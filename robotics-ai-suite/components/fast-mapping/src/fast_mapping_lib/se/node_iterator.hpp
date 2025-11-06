@@ -28,31 +28,29 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+
 #ifndef NODE_ITERATOR_H
 #define NODE_ITERATOR_H
-
-#include "Eigen/Dense"
 #include "octree.hpp"
+#include "Eigen/Dense"
 
-namespace se
-{
+namespace se {
 
 template <typename T>
-class node_iterator
-{
-public:
-  node_iterator(const Octree<T> & m) : map_(m)
-  {
+class node_iterator {
+
+  public:
+
+  node_iterator(const Octree<T>& m): map_(m){
     state_ = BRANCH_NODES;
     last = 0;
   };
 
-  Node<T> * next()
-  {
-    switch (state_) {
+  Node<T> *  next() {
+    switch(state_) {
       case BRANCH_NODES:
-        if (last < map_.nodes_buffer_.size()) {
-          Node<T> * n = map_.nodes_buffer_[last++];
+        if(last < map_.nodes_buffer_.size()) {
+          Node<T>* n = map_.nodes_buffer_[last++];
           return n;
         } else {
           last = 0;
@@ -61,10 +59,10 @@ public:
         }
         break;
       case LEAF_NODES:
-        if (last < map_.block_buffer_.size()) {
-          VoxelBlock<T> * n = map_.block_buffer_[last++];
+        if(last < map_.block_buffer_.size()) {
+          VoxelBlock<T>* n = map_.block_buffer_[last++];
           return n;
-          // the above int init required due to odr-use of static member
+              /* the above int init required due to odr-use of static member */
         } else {
           last = 0;
           state_ = FINISHED;
@@ -74,17 +72,19 @@ public:
       case FINISHED:
         return nullptr;
     }
-
     return nullptr;
   }
 
-private:
-  typedef enum ITER_STATE { BRANCH_NODES, LEAF_NODES, FINISHED } ITER_STATE;
+  private:
+  typedef enum ITER_STATE {
+    BRANCH_NODES,
+    LEAF_NODES,
+    FINISHED
+  } ITER_STATE;
 
-  const Octree<T> & map_;
+  const Octree<T>& map_;
   ITER_STATE state_;
   size_t last;
 };
-
-}  // namespace se
-#endif  // NODE_ITERATOR_H
+}
+#endif

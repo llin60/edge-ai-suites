@@ -8,8 +8,10 @@
 
 import os
 import logging
+import pickle
 import time
 import warnings
+from xml.parsers.expat import model
 from kapacitor.udf.agent import Agent, Handler
 from kapacitor.udf import udf_pb2
 import catboost as cb
@@ -44,11 +46,17 @@ class AnomalyDetectorHandler(Handler):
     """
     def __init__(self, agent):
         self._agent = agent
+        # read the saved model and load it
+        def load_model(filename):
+            with open(filename, 'rb') as f:
+                model = pickle.load(f)
+            return model
         # Need to enable after model training
         model_name = (os.path.basename(__file__)).replace('.py', '.cb')
         model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                    "../models/" + model_name)
         model_path = os.path.abspath(model_path)
+        # self.rf = load_model(model_path)
 
         # Initialize a CatBoostClassifier model for anomaly detection
         self.model = cb.CatBoostClassifier(
@@ -106,9 +114,10 @@ class AnomalyDetectorHandler(Handler):
         """
         server = None
         start_time = time.time_ns()
-        if "source" in point.tags:
-            server = point.tags["source"]
-
+        for point_tag in point.tags:
+            if point_tag.key == "source":
+                server = point_tag.value
+                break
         global enable_benchmarking
         if enable_benchmarking:
             if server not in self.points_received:
@@ -118,40 +127,35 @@ class AnomalyDetectorHandler(Handler):
             self.points_received[server] += 1
 
         fields = {}
-        for key, value in point.fieldsDouble.items():
-            fields[key] = value
-            
-        for key, value in point.fieldsInt.items():
-            fields[key] = value
-            
-        for key, value in point.fieldsString.items():
-            fields[key] = value
-
+        for kv in point.fieldsDouble:
+            fields[kv.key] = kv.value
+        for kv in point.fieldsInt:
+            fields[kv.key] = kv.value
+        for kv in point.fieldsString:
+            fields[kv.key] = kv.value
         point_series = pd.Series(fields)
         if "Primary Weld Current" in point_series and point_series["Primary Weld Current"] > 50:
             defect_likelihood_main = self.model.predict_proba(point_series)
             bad_defect = defect_likelihood_main[0]*100
             good_defect = defect_likelihood_main[1]*100
             if bad_defect > 50:
-                point.fieldsDouble["anomaly_status"] = 1.0
+                point.fieldsDouble.add(key = "anomaly_status", value = 1.0)
             logger.info(f"Good Weld: {good_defect:.2f}%, Defective Weld: {bad_defect:.2f}%")
         else:
             logger.info("Good Weld: N/A, Defective Weld: N/A") 
 
-        point.fieldsDouble["Good Weld"] = round(good_defect, 2) if "good_defect" in locals() else 0.0
-        point.fieldsDouble["Defective Weld"] = round(bad_defect, 2) if "bad_defect" in locals() else 0.0
-        
+        point.fieldsDouble.add(key = "Good Weld", value = round(good_defect, 2) if "good_defect" in locals() else 0.0)
+        point.fieldsDouble.add(key = "Defective Weld", value = round(bad_defect,2) if "bad_defect" in locals() else 0.0)
         time_now = time.time_ns()
-        processing_time = time_now - start_time
-        end_end_time = time_now - point.time
-        point.fieldsDouble["processing_time"] = processing_time
-        point.fieldsDouble["end_end_time"] = end_end_time
+        point.fieldsDouble.add(key = 'processing_time', value = time_now-start_time)
+
+        point.fieldsDouble.add(key = 'end_end_time', value = time_now-point.time)
 
         logger.info("Processing point %s %s for source %s", point.time, time.time(), server)
 
         response = udf_pb2.Response()
-        if "anomaly_status" not in point.fieldsDouble:
-            point.fieldsDouble["anomaly_status"] = 0.0
+        if not any(kv.key == "anomaly_status" for kv in point.fieldsDouble):
+            point.fieldsDouble.add(key = "anomaly_status", value = 0.0)
         response.point.CopyFrom(point)
         self._agent.write_response(response, True)
 

@@ -1,9 +1,3 @@
-<!--
-Copyright (C) 2025 Intel Corporation
-
-SPDX-License-Identifier: Apache-2.0
--->
-
 <launch>
     <arg name="mode" default="demo"/>
     <arg name="saved_pose_dir" default=""/>

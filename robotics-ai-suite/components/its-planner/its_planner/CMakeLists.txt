@@ -1,9 +1,6 @@
-# Copyright (C) 2025 Intel Corporation
-#
 # SPDX-License-Identifier: Apache-2.0
-
-# https://docs.ros.org/en/humble/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html#id5
-cmake_minimum_required(VERSION 3.14.4)
+# Copyright (C) 2025 Intel Corporation
+cmake_minimum_required(VERSION 3.5)
 project(its_planner)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -68,13 +65,6 @@ target_link_libraries(${library_name} boost_serialization
 
 target_compile_definitions(${library_name} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 
-if($ENV{ROS_DISTRO} STREQUAL "humble")
-  target_compile_definitions(${library_name} PUBLIC "ROS_DISTRO_HUMBLE")
-endif()
-
-if($ENV{ROS_DISTRO} STREQUAL "jazzy")
-  target_compile_definitions(${library_name} PUBLIC "ROS_DISTRO_JAZZY")
-endif()
 
 pluginlib_export_plugin_description_file(nav2_core global_planner_plugin.xml)
 

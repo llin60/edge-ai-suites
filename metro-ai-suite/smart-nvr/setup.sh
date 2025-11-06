@@ -148,16 +148,10 @@ start_services() {
     
     print_info "Starting Docker Compose services..."
     # Run the Docker Compose stack with all services
-    docker compose -f docker/compose.yaml up -d
-    if [ $? -eq 0 ]; then
-        sleep 5
-        print_success "Services are starting up..."
-        print_info "UI will be available at: ${CYAN}http://${HOST_IP}:7860${NC}"
-    else
-        print_error "Docker Compose failed to start services."
-        exit 1
-    fi
-
+    docker compose -f docker/compose.yaml up -d 
+    sleep 5
+    print_success "Services are starting up..."
+    print_info "UI will be available at: ${CYAN}http://${HOST_IP}:7860${NC}"
 }
 
 # Function to stop the services

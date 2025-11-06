@@ -45,8 +45,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   name: grafana-dashboard-json
 data:
-  grafana-dashboard.json: |-
-{{ .Files.Get "grafana-dashboard.json" | indent 4 }}
+  dashboard.json: |-
+{{ .Files.Get "dashboard.json" | indent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -56,6 +56,15 @@ metadata:
 data:
   datasources.yml: |-
 {{ .Files.Get "datasources.yml" | indent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: grafana-entrypoint
+data:
+  entrypoint.sh: |-
+{{ .Files.Get "grafana_entrypoint.sh" | indent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap

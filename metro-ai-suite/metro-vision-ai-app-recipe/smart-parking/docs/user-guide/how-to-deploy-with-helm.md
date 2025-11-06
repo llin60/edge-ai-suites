@@ -36,25 +36,6 @@ cd edge-ai-suites/metro-ai-suite/metro-vision-ai-app-recipe/
 
 ```
 
-Optional: Pull the helm chart and replace the existing helm-chart folder with it
-    - Note: The helm chart should be downloaded when you are not using the helm chart provided in `edge-ai-suites/metro-ai-suite/metro-vision-ai-app-recipe/smart-parking/helm-chart`
-
-```bash
-#Navigate to Smart Parking directory
-cd smart-parking
-
-#Download helm chart with the following command
-helm pull oci://registry-1.docker.io/intel/smart-parking --version 1.2.0
-
-#unzip the package using the following command
-tar -xvf smart-parking-1.2.0.tgz
-
-#Replace the helm directory
-rm -rf helm-chart && mv smart-parking helm-chart
-
-cd ..
-```
-
 
 ## Step 2: Configure and update the environment variables
 
@@ -94,7 +75,7 @@ Follow this procedure to run the sample application. In a typical deployment, mu
 
 ``` sh
 #!/bin/bash
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30485/pipelines/user_defined_pipelines/yolov10_1_cpu -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/new_video_1.mp4",
@@ -116,7 +97,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_
     }
 }'
 
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30485/pipelines/user_defined_pipelines/yolov10_1_cpu -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/new_video_2.mp4",
@@ -138,7 +119,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_
     }
 }'
 
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30485/pipelines/user_defined_pipelines/yolov10_1_cpu -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/new_video_3.mp4",
@@ -160,7 +141,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_
     }
 }'
 
-curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_cpu -X POST -H 'Content-Type: application/json' -d '
+curl http://<HOST_IP>:30485/pipelines/user_defined_pipelines/yolov10_1_cpu -X POST -H 'Content-Type: application/json' -d '
 {
     "source": {
         "uri": "file:///home/pipeline-server/videos/new_video_4.mp4",
@@ -183,7 +164,7 @@ curl -k https://<HOST_IP>:30443/api/pipelines/user_defined_pipelines/yolov11s_1_
 }'
 ```
 
-4. View the Grafana and WebRTC streaming on `https://<HOST_IP>:30443/grafana/`.
+4. View the Grafana and WebRTC streaming on `http://<HOST_IP>:30480`.
     - Log in with the following credentials:
         - **Username:** `admin`
         - **Password:** `admin`

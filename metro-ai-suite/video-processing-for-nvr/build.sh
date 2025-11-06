@@ -38,4 +38,3 @@ cd build
 cmake ../svet_app
 make -j8
 cd ../
-sudo apt remove --purge -y wget

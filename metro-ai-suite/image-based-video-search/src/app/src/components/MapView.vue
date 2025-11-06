@@ -36,11 +36,11 @@ export default defineComponent({
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(this.map as L.Map);
+      }).addTo(this.map);
 
       L.marker(
         [33.4484, -112.0740]
-      ).addTo(this.map as L.Map)
+      ).addTo(this.map)
         .bindPopup('11 N Central Ave #4, Phoenix, AZ')
         .openPopup();
 

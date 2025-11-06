@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install -y wget libssl-dev
+sudo apt install wget
 
 wget -c https://github.com/k0zmo/live555/archive/refs/heads/master.zip
 unzip master.zip

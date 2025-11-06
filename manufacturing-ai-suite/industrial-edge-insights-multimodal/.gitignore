@@ -1,9 +1,0 @@
-# Helm directory ignore patterns
-helm/*.json
-helm/*.yml
-helm/*.yaml
-helm/*.conf
-helm/*.sh
-helm/*.csv
-
-.venv/

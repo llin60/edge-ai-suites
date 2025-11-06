@@ -25,9 +25,9 @@
   These should contain the external IP address of the machine running the Docker containers and the corresponding service ports. For example:
   ```
   SCENESCAPE_REMOTE_URL="https://YOUR_MACHINE_IP"
-  GRAFANA_REMOTE_URL="https://YOUR_MACHINE_IP/grafana/"
+  GRAFANA_REMOTE_URL="http://YOUR_MACHINE_IP:3000"
   INFLUX_REMOTE_DB_URL="http://YOUR_MACHINE_IP:8086"
-  NODE_RED_REMOTE_URL="https://YOUR_MACHINE_IP/nodered/"
+  NODE_RED_REMOTE_URL="http://YOUR_MACHINE_IP:1880"
   ```
   
   Replace `YOUR_MACHINE_IP` with the actual IP address of your machine. If you do not set those URLs, remote endpoint tests will be skipped.

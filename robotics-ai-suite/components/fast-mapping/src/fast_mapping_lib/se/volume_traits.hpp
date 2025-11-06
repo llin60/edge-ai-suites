@@ -38,18 +38,16 @@
  *
 ****************************************************************************/
 
-typedef struct
-{
+typedef struct {
   float x;
   float y;
 } SDF;
 
-template <>
-struct voxel_traits<SDF>
-{
+template<>
+struct voxel_traits<SDF> {
   typedef SDF value_type;
-  static inline value_type empty() { return {1.f, -1.f}; }
-  static inline value_type initValue() { return {1.f, 0.f}; }
+  static inline value_type empty(){ return {1.f, -1.f}; }
+  static inline value_type initValue(){ return {1.f, 0.f}; }
 };
 
 /******************************************************************************
@@ -58,25 +56,23 @@ struct voxel_traits<SDF>
  *
 ****************************************************************************/
 
-typedef struct
-{
-  float x;
-  float y;  // last time when update `x`
+typedef struct {
+    float x;
+    float y;           // last time when update `x`
 } OFusion;
 
-template <>
-struct voxel_traits<OFusion>
-{
+template<>
+struct voxel_traits<OFusion> {
   typedef OFusion value_type;
-  static inline value_type empty() { return {0.f, 0.f}; }
-  static inline value_type initValue() { return {0.f, 0.f}; }
+  static inline value_type empty(){ return {0.f, 0.f}; }
+  static inline value_type initValue(){ return {0.f, 0.f}; }
 };
 
 // Windowing parameters
-#define DELTA_T 1.f
+#define DELTA_T   1.f
 #define CAPITAL_T 4.f
 
 #define INTERP_THRESH 0.05f
 #define SURF_BOUNDARY 0.f
 
-#endif  // VOLUME_H
+#endif

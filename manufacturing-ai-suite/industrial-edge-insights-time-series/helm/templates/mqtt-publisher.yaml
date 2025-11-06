@@ -21,13 +21,6 @@ spec:
       labels:
         app: mqtt-publisher
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: {{ $.Values.env.TIMESERIES_UID }}
-        runAsGroup: {{ $.Values.env.TIMESERIES_UID }}
-        fsGroup: {{ $.Values.env.TIMESERIES_UID }}
-        seccompProfile:
-          type: RuntimeDefault
       {{- if and .Values.DOCKER_USERNAME .Values.DOCKER_PASSWORD }}
       imagePullSecrets:
       - name: registryauth
@@ -39,7 +32,6 @@ spec:
         securityContext:
           runAsUser: {{ $.Values.env.TIMESERIES_UID }}
           runAsGroup: {{ $.Values.env.TIMESERIES_UID }}
-          runAsNonRoot: true
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           capabilities:

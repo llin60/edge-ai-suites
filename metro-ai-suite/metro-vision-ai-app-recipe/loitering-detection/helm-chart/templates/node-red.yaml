@@ -83,12 +83,13 @@ metadata:
   labels:
     app: node-red
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: {{ $.Values.config.node_red.int.web_ui_port }}
     targetPort: {{ $.Values.config.node_red.int.web_ui_port }}
     protocol: TCP
     name: http
+    nodePort: {{ $.Values.config.node_red.ext.web_ui_port }}
   selector:
     app: node-red
 ---

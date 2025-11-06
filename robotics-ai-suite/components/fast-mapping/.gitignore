@@ -1,7 +1,3 @@
-# Copyright (C) 2025 Intel Corporation
-#
-# SPDX-License-Identifier: Apache-2.0
-
 # IDE project specific files
 .idea
 .vscode
@@ -25,16 +21,3 @@ log
 *.bin
 *.pyc
 */*.d
-
-# Do not include temporary dir created during build process
-./debian/
-*.deb
-*.buildinfo
-*.changes
-
-# tests logs
-tests/**.txt
-tests/.env
-.env
-*.txt
-*.core
