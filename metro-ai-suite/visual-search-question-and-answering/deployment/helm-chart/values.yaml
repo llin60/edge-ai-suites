@@ -109,7 +109,6 @@ dataprepVisualdataMilvus:
     DEVICE: "CPU"
     MILVUS_PORT: 19530
     HF_ENDPOINT: "https://hf-mirror.com"
-    HOST_DATA_PATH: "/home/user/data"
   livenessProbe:
     initialDelaySeconds: 60
     periodSeconds: 30
